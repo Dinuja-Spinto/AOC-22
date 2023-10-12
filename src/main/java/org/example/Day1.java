@@ -29,6 +29,9 @@ public class Day1 {
                     elfTotalCalories=0;
                 }
             }
+            if(elfTotalCalories != 0){
+                totalCaloriesOfElfCarry.add(elfTotalCalories);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
