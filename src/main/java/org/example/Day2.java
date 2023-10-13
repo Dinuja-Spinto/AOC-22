@@ -110,9 +110,10 @@ public class Day2 {
     }
 
     public static int pipeLine(String fileName){
+        ArrayList<ArrayList<String>> inputData = readFile(fileName);
         return findTotalScore(
-                findTotalScoreEachRound(findOutComeScoreOfEachRound(readFile(fileName)),
-                        findSelectedShapeScoreOfEachRound(readFile(fileName)))
+                findTotalScoreEachRound(findOutComeScoreOfEachRound(inputData),
+                        findSelectedShapeScoreOfEachRound(inputData))
         );
     }
 }
