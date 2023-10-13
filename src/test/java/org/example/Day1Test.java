@@ -2,8 +2,6 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
