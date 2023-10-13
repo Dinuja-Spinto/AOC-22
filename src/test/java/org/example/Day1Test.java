@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import static org.example.Day1.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,38 +13,72 @@ import static org.junit.jupiter.api.Assertions.*;
 class Day1Test {
 
     @Test
-    void totalCaloriesOfElf(){
-        String filePath = "src/test/java/org/example/day1TestInput.txt";
-        File inputFile = new File(filePath);
+    void readFile(){
+        ArrayList<String> actual = ElfCarryingCalories("/day1TestInput.txt");
+        ArrayList<String> expected = new ArrayList<>();
+        expected.add("1000");
+        expected.add("2000");
+        expected.add("3000");
+        expected.add("");
+        expected.add("4000");
+        expected.add("");
+        expected.add("5000");
+        expected.add("6000");
+        expected.add("");
+        expected.add("7000");
+        expected.add("8000");
+        expected.add("9000");
+        expected.add("");
+        expected.add("10000");
 
-        ArrayList<Integer> totalCaloriesOfElfCarryTest = new ArrayList<>();
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void calculateTotalCarryingOf(){
+        ArrayList<String> input = new ArrayList<>();
+        input.add("1000");
+        input.add("2000");
+        input.add("3000");
+        input.add("");
+        input.add("4000");
+        input.add("");
+        input.add("5000");
+        input.add("6000");
+        input.add("");
+        input.add("7000");
+        input.add("8000");
+        input.add("9000");
+        input.add("");
+        input.add("10000");
+
+        TreeSet<Integer> result = calculateTotalCarryingOfElf(input);
+
+        TreeSet<Integer> totalCaloriesOfElfCarryTest = new TreeSet<>();
         totalCaloriesOfElfCarryTest.add(6000);
         totalCaloriesOfElfCarryTest.add(4000);
         totalCaloriesOfElfCarryTest.add(11000);
         totalCaloriesOfElfCarryTest.add(24000);
         totalCaloriesOfElfCarryTest.add(10000);
 
-        try {
-            assertEquals(totalCaloriesOfElfCarryTest,ElfCarryingTotalCalories(inputFile));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        assertEquals(totalCaloriesOfElfCarryTest,result);
+
     }
 
     @Test
     void elfCarryingMostCaloriesTest() {
-        ArrayList<Integer> totalCaloriesOfElfCarryTest = new ArrayList<>();
+        TreeSet<Integer> totalCaloriesOfElfCarryTest = new TreeSet<>();
         totalCaloriesOfElfCarryTest.add(6000);
         totalCaloriesOfElfCarryTest.add(4000);
         totalCaloriesOfElfCarryTest.add(11000);
         totalCaloriesOfElfCarryTest.add(24000);
         totalCaloriesOfElfCarryTest.add(10000);
-        assertEquals("Total Calories is that Elf carrying: 24000",ElfCarryingMostCalories(totalCaloriesOfElfCarryTest));
+        assertEquals(24000,ElfCarryingMostCalories(totalCaloriesOfElfCarryTest));
     }
 
     @Test
     void totalOfElfCarryingCaloriesTest() {
-        ArrayList<Integer> totalCaloriesOfElfCarryTest = new ArrayList<>();
+        TreeSet<Integer> totalCaloriesOfElfCarryTest = new TreeSet<>();
         totalCaloriesOfElfCarryTest.add(6000);
         totalCaloriesOfElfCarryTest.add(4000);
         totalCaloriesOfElfCarryTest.add(11000);
