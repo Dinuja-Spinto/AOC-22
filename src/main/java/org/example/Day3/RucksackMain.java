@@ -11,7 +11,14 @@ import java.util.stream.Collectors;
 public class RucksackMain {
     public static void main(String[] args) {
         String fileName = "/day3Input.txt";
+
+        //part1
         System.out.println("sum of the priorities: "+pipeLine(fileName));
+
+        //part2
+        System.out.println("sum of the common items priorities: "+pipeline_2(fileName));
+
+
     }
     //--part1--
     public static ArrayList<String> readFile(String fileName) {
@@ -89,14 +96,55 @@ public class RucksackMain {
         return total;
     }
 
+    public static ArrayList<Rucksack> ruckSacks(String fileName){
+        return splitItemOfCompartments(
+                readFile(fileName)
+        );
+    }
+
     public static int pipeLine(String fileName){
         return sumOfPriorityOfTheItem(
                 setPriorityForEachItem(
                     findSameItemInCompartments(
-                        splitItemOfCompartments(
-                                readFile(fileName)))));
+                            ruckSacks(fileName))));
     }
 
+
     //--part2--
+    public static ArrayList<ElvesGroup> groupElves(ArrayList<Rucksack> rucks){
+        ArrayList<ElvesGroup> elvesGroups = new ArrayList<>();
+        for (int i = 0; i < rucks.size(); i += 3) {
+            elvesGroups.add(new ElvesGroup(rucks.get(i), rucks.get(i+1), rucks.get(i+2)));
+        }
+        return elvesGroups;
+    }
+
+    public static ArrayList<String> findCommanItemOfGroup(ArrayList<ElvesGroup> groups){
+        ArrayList<String> commanItemOfGroup = new ArrayList<>();
+        for(ElvesGroup group : groups){
+            String ruckOne = group.getElvOne().getCompartmentOne()+group.getElvOne().getCompartmentTwo();
+            String ruckTwo = group.getElvTwo().getCompartmentOne()+group.getElvTwo().getCompartmentTwo();
+            String ruckThree = group.getElvThree().getCompartmentOne()+group.getElvThree().getCompartmentTwo();
+
+            Set<Character> commonItem = ruckOne.chars()
+                    .mapToObj(c -> (char) c)
+                    .filter(c -> ruckTwo.contains(String.valueOf(c)))
+                    .filter(c -> ruckThree.contains(String.valueOf(c)))
+                    .collect(Collectors.toSet());
+
+            String sameItem = commonItem.stream().map(Object::toString).collect(Collectors.joining(""));
+
+            commanItemOfGroup.add(sameItem);
+        }
+        return commanItemOfGroup;
+    }
+
+    public static int pipeline_2(String fileName){
+        return sumOfPriorityOfTheItem(
+                setPriorityForEachItem(
+                        findCommanItemOfGroup(
+                                groupElves(
+                                ruckSacks(fileName)))));
+    }
 
 }
