@@ -10,8 +10,11 @@ public class campCleanup {
     public static void main(String[] args) {
         String fileName = "/day4Input.txt";
 
-        //part1
+        //--part1
         System.out.println("Total of pairs does one range fully contain the other: "+pipeLine(fileName));
+
+        //--part2
+        System.out.println("Total of assignment pairs do the ranges overlap: "+pipeLine_2(fileName));
 
     }
     //--part1--
@@ -74,4 +77,34 @@ public class campCleanup {
         );
     }
 
+    //--PartTwo--
+    private static boolean isOverLapping_2(String rangeOfIDs1, String rangeOfIDs2) {
+
+        int Range1Start = Integer.parseInt(rangeOfIDs1.split("-")[0]);
+        int Range1end= Integer.parseInt(rangeOfIDs1.split("-")[1]);
+
+        int Range2Start = Integer.parseInt(rangeOfIDs2.split("-")[0]);
+        int Range2end = Integer.parseInt(rangeOfIDs2.split("-")[1]);
+
+        return ( Range1end >= Range2Start && Range1Start <= Range2end );
+    }
+
+    public static int totalOfOverlappingPairs_2(ArrayList<ElvesPair> elvesPairs){
+        int totalOverlaps = 0;
+        for( ElvesPair elvesPair : elvesPairs ){
+            if( isOverLapping_2(elvesPair.getElf1().getRangeOfIDs(), elvesPair.getElf2().getRangeOfIDs())){
+                totalOverlaps += 1;
+            }
+        }
+
+        return totalOverlaps;
+    }
+
+    public static int pipeLine_2(String fileName){
+        return totalOfOverlappingPairs_2(
+                getElvesPairs(
+                        readFile(fileName)
+                )
+        );
+    }
 }
