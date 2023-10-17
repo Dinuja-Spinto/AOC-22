@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.example.Day3.RucksackMain.readFile;
-import static org.example.Day4.campCleanup.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.example.Day4.CampCleanup.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class campCleanupTest {
+class CampCleanupTest {
 
     @Test
     void readFileTest() {
@@ -37,7 +35,7 @@ class campCleanupTest {
     @Test
     void totalOfOverlappingPairsTest() {
         ArrayList<String> actual = readFile("/day4TestInput.txt");
-        assertEquals(2,totalOfOverlappingPairs(getElvesPairs(actual)));
+        assertEquals(2,totalOfOverlappingPairs(getElvesPairs(actual), CampCleanup :: isOverLapping));
     }
 
     @Test
@@ -48,7 +46,7 @@ class campCleanupTest {
     @Test
     void totalOfOverlappingPairs_2Test() {
         ArrayList<String> actual = readFile("/day4TestInput.txt");
-        assertEquals(4,totalOfOverlappingPairs_2(getElvesPairs(actual)));
+        assertEquals(4,totalOfOverlappingPairs(getElvesPairs(actual),CampCleanup :: isOverLapping_2));
     }
 
     @Test

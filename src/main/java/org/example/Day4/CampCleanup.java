@@ -6,7 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class campCleanup {
+public class CampCleanup {
+
+    public interface InterceptionCondition{
+        boolean doesConditionSatisfy(String range1, String range2);
+    }
+
     public static void main(String[] args) {
         String fileName = "/day4Input.txt";
 
@@ -15,11 +20,10 @@ public class campCleanup {
 
         //--part2
         System.out.println("Total of assignment pairs do the ranges overlap: "+pipeLine_2(fileName));
-
     }
     //--part1--
     public static ArrayList<String> readFile(String fileName) {
-        InputStream inputStream = campCleanup.class.getResourceAsStream(fileName);
+        InputStream inputStream = CampCleanup.class.getResourceAsStream(fileName);
         String assignmentsForEachPair;
         ArrayList<String> allAssignmentsForEachPair = new ArrayList<>();
         try {
@@ -45,7 +49,7 @@ public class campCleanup {
         return elvesPairs;
     }
 
-    private static boolean isOverLapping(String rangeOfIDs1, String rangeOfIDs2) {
+    public static boolean isOverLapping(String rangeOfIDs1, String rangeOfIDs2) {
 
         int Range1Start = Integer.parseInt(rangeOfIDs1.split("-")[0]);
         int Range1end= Integer.parseInt(rangeOfIDs1.split("-")[1]);
@@ -58,14 +62,13 @@ public class campCleanup {
     }
 
 
-    public static int totalOfOverlappingPairs(ArrayList<ElvesPair> elvesPairs){
+    public static int totalOfOverlappingPairs(ArrayList<ElvesPair> elvesPairs, InterceptionCondition condition){
         int totalOverlaps = 0;
         for( ElvesPair elvesPair : elvesPairs ){
-            if( isOverLapping(elvesPair.getElf1().getRangeOfIDs(), elvesPair.getElf2().getRangeOfIDs())){
+            if( condition.doesConditionSatisfy(elvesPair.getElf1().getRangeOfIDs(), elvesPair.getElf2().getRangeOfIDs())){
                 totalOverlaps += 1;
             }
         }
-
         return totalOverlaps;
     }
 
@@ -73,12 +76,12 @@ public class campCleanup {
         return totalOfOverlappingPairs(
                 getElvesPairs(
                         readFile(fileName)
-                )
+                ), CampCleanup::isOverLapping
         );
     }
 
     //--PartTwo--
-    private static boolean isOverLapping_2(String rangeOfIDs1, String rangeOfIDs2) {
+    public static boolean isOverLapping_2(String rangeOfIDs1, String rangeOfIDs2) {
 
         int Range1Start = Integer.parseInt(rangeOfIDs1.split("-")[0]);
         int Range1end= Integer.parseInt(rangeOfIDs1.split("-")[1]);
@@ -89,7 +92,7 @@ public class campCleanup {
         return ( Range1end >= Range2Start && Range1Start <= Range2end );
     }
 
-    public static int totalOfOverlappingPairs_2(ArrayList<ElvesPair> elvesPairs){
+   /* public static int totalOfOverlappingPairs_2(ArrayList<ElvesPair> elvesPairs){
         int totalOverlaps = 0;
         for( ElvesPair elvesPair : elvesPairs ){
             if( isOverLapping_2(elvesPair.getElf1().getRangeOfIDs(), elvesPair.getElf2().getRangeOfIDs())){
@@ -98,13 +101,13 @@ public class campCleanup {
         }
 
         return totalOverlaps;
-    }
+    }*/
 
     public static int pipeLine_2(String fileName){
-        return totalOfOverlappingPairs_2(
+        return totalOfOverlappingPairs(
                 getElvesPairs(
                         readFile(fileName)
-                )
+                ),CampCleanup::isOverLapping_2
         );
     }
 }
