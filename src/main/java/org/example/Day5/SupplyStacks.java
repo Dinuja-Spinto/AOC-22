@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +20,7 @@ public class SupplyStacks {
         System.out.println("Part 2--> After the rearrangement procedure completes, the crate ends up on top of each stack: "+pipeLine2(fileName));
     }
 
-    private static ArrayList<Stack<String>> getTestStacks() {
+    public static ArrayList<Stack<String>> getTestStacks() {
         ArrayList<Stack<String>> stackListTest = new ArrayList<>();
 
         Stack<String> stack1Test = new Stack<>();
