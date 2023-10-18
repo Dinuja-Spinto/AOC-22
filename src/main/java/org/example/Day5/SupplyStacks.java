@@ -12,11 +12,13 @@ import java.util.regex.Pattern;
 
 public class SupplyStacks {
     public static void main(String[] args) {
-        
+
         String fileName = "/day5Input.txt";
 
-        //part1
-        System.out.println("After the rearrangement procedure completes, the crate ends up on top of each stack: "+pipeLine(fileName));
+        //--part1--
+        System.out.println("Part 1--> After the rearrangement procedure completes, the crate ends up on top of each stack: "+pipeLine(fileName));
+        //--part2--
+        System.out.println("Part 2--> After the rearrangement procedure completes, the crate ends up on top of each stack: "+pipeLine2(fileName));
     }
 
     private static ArrayList<Stack<String>> getTestStacks() {
@@ -206,6 +208,37 @@ public class SupplyStacks {
     public static String pipeLine(String fileName){
         return getTopOfEachStack(
                 getStacksAfterRearrange( getStacks(),
+                        getMoves(
+                                readFile(fileName)
+                        )
+
+                )
+        );
+    }
+
+    //part2
+    public static ArrayList<Stack<String>> getStacksAfterRearrange2(ArrayList<Stack<String>> stackListTest, ArrayList<int[]> instructions ){
+        for (int[] instruction: instructions) {
+            int noOfItems = instruction[0];
+            int fromStack = instruction[1];
+            int toStack = instruction[2];
+
+            Stack<String> from = stackListTest.get(fromStack-1);
+            Stack<String> to = stackListTest.get(toStack-1);
+            Stack<String> tempStack = new Stack<>();
+            for(int i = 0; i < noOfItems; i++){
+                tempStack.push(from.pop());
+            }
+            while (!tempStack.isEmpty()){
+                to.push(tempStack.pop());
+            }
+        }
+        return stackListTest;
+    }
+
+    public static String pipeLine2(String fileName){
+        return getTopOfEachStack(
+                getStacksAfterRearrange2( getStacks(),
                         getMoves(
                                 readFile(fileName)
                         )
