@@ -10,6 +10,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SupplyStacks {
+
+    public static final int NO_OF_ITEMS = 0;
+    public static final int FROM_STACK = 1;
+    public static final int TO_STACK = 2;
+
+    public interface CrateMover{
+        void usedCrateMoverType(Stack<String> from, Stack<String> to, int noOfItems);
+    }
     public static void main(String[] args) {
 
         String fileName = "/day5Input.txt";
@@ -169,9 +177,9 @@ public class SupplyStacks {
             if (count == 0) {
                 noOfItems = number;
             } else if (count == 1) {
-                fromStack = number;
+                fromStack = number-1;
             } else if (count == 2) {
-                toStack = number;
+                toStack = number-1;
             }
             count++;
         }
@@ -179,21 +187,25 @@ public class SupplyStacks {
     }
 
 
-    public static ArrayList<Stack<String>> getStacksAfterRearrange(ArrayList<Stack<String>> stackListTest, ArrayList<int[]> instructions ){
+    public static ArrayList<Stack<String>> getStacksAfterRearrange(ArrayList<Stack<String>> stackListTest, ArrayList<int[]> instructions, CrateMover crateMover ){
         for (int[] instruction: instructions) {
-            int noOfItems = instruction[0];
-            int fromStack = instruction[1];
-            int toStack = instruction[2];
+            int noOfItems = instruction[NO_OF_ITEMS];
+            int fromStack = instruction[FROM_STACK];
+            int toStack = instruction[TO_STACK];
 
-            Stack<String> from = stackListTest.get(fromStack-1);
-            Stack<String> to = stackListTest.get(toStack-1);
+            Stack<String> from = stackListTest.get(fromStack);
+            Stack<String> to = stackListTest.get(toStack);
 
-            for(int i = 0; i < noOfItems; i++){
-                to.push(from.pop());
-            }
+            crateMover.usedCrateMoverType(from,to,noOfItems );
 
         }
         return stackListTest;
+    }
+
+    public static void whenCrateMover9000(Stack<String> from, Stack<String> to, int noOfItems){
+        for(int i = 0; i < noOfItems; i++){
+            to.push(from.pop());
+        }
     }
 
     public static String getTopOfEachStack(ArrayList<Stack<String>> reArrangedStacks){
@@ -209,38 +221,30 @@ public class SupplyStacks {
                 getStacksAfterRearrange( getStacks(),
                         getMoves(
                                 readFile(fileName)
-                        )
-
+                        ),
+                        SupplyStacks::whenCrateMover9000
                 )
         );
     }
 
-    //part2
-    public static ArrayList<Stack<String>> getStacksAfterRearrange2(ArrayList<Stack<String>> stackListTest, ArrayList<int[]> instructions ){
-        for (int[] instruction: instructions) {
-            int noOfItems = instruction[0];
-            int fromStack = instruction[1];
-            int toStack = instruction[2];
-
-            Stack<String> from = stackListTest.get(fromStack-1);
-            Stack<String> to = stackListTest.get(toStack-1);
-            Stack<String> tempStack = new Stack<>();
-            for(int i = 0; i < noOfItems; i++){
-                tempStack.push(from.pop());
-            }
-            while (!tempStack.isEmpty()){
-                to.push(tempStack.pop());
-            }
+    //--part2--
+    public static void whenCrateMover9001(Stack<String> from, Stack<String> to, int noOfItems) {
+        Stack<String> tempStack = new Stack<>();
+        for(int i = 0; i < noOfItems; i++){
+            tempStack.push(from.pop());
         }
-        return stackListTest;
+        while (!tempStack.isEmpty()){
+            to.push(tempStack.pop());
+        }
     }
 
     public static String pipeLine2(String fileName){
         return getTopOfEachStack(
-                getStacksAfterRearrange2( getStacks(),
+                getStacksAfterRearrange( getStacks(),
                         getMoves(
                                 readFile(fileName)
-                        )
+                        ),
+                        SupplyStacks::whenCrateMover9001
 
                 )
         );

@@ -28,10 +28,10 @@ class SupplyStacksTest {
     @Test
     void getMovesTest() {
         ArrayList<int[]> expected = new ArrayList<>();
-        int [] one = {1,2,1};
-        int [] two = {1,2,1};
-        int [] three = {1,2,1};
-        int [] four = {1,2,1};
+        int [] one = {1,1,0};
+        int [] two = {1,0,2};
+        int [] three = {2,1,0};
+        int [] four = {1,0,1};
         expected.add(one); expected.add(two); expected.add(three); expected.add(four);
 
         ArrayList<String> instructions = readFile("/day5TestInput.txt");
@@ -42,7 +42,7 @@ class SupplyStacksTest {
 
     @Test
     void fetchNumbersFromInstructionTest() {
-        int [] expected = {1,2,1};
+        int [] expected = {1,1,0};
 
         Assertions.assertEquals(Arrays.toString(expected), Arrays.toString(fetchNumbersFromInstruction("move 1 from 2 to 1")));
     }
@@ -50,7 +50,7 @@ class SupplyStacksTest {
     @Test
     void getTopOfEachStackTest() {
         ArrayList<String> instructions = readFile("/day5TestInput.txt");
-        String actual = getTopOfEachStack(getStacksAfterRearrange(getTestStacks(),getMoves(instructions)));
+        String actual = getTopOfEachStack(getStacksAfterRearrange(getTestStacks(),getMoves(instructions), SupplyStacks::whenCrateMover9000));
 
         assertEquals("CMZ",actual);
     }
