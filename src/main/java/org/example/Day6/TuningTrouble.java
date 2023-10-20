@@ -9,11 +9,15 @@ import java.util.Set;
 
 public class TuningTrouble {
 
-    public static final int DIF_NO_OF_LAST_CHAR = 4;
+    public static final int fourCharactersThatAllDifferent = 4;
+    public static final int fourteenCharactersThatAllDifferent = 14;
 
     public static void main(String[] args) {
         String fileName = "/day6Input.txt";
-        System.out.println(pipeLine(fileName));
+        //partOne
+        System.out.println("Characters need to be processed when 4 characters: "+pipeLine(fileName));
+        //partTwo
+        System.out.println("Characters need to be processed when 14 characters: "+pipeLine2(fileName));
     }
 
     public static String readFile(String fileName){
@@ -29,17 +33,17 @@ public class TuningTrouble {
         }
         return dataStream;
     }
-
-    public static int charactersToBeProcessedBeforeFirstMarker(String dataStream) {
+    //partOne
+    public static int charactersToBeProcessedBeforeFirstMarker(String dataStream, int difNoOfLastChar) {
         StringBuilder marker = new StringBuilder();
 
         int numOfCharToProcess=0;
         //sliding window
-        for (int i = 0; i < DIF_NO_OF_LAST_CHAR; i++) {
+        for (int i = 0; i < difNoOfLastChar; i++) {
             marker.append(dataStream.charAt(i));
         }
 
-        for (int i = DIF_NO_OF_LAST_CHAR; i < dataStream.length(); i++) {
+        for (int i = difNoOfLastChar; i < dataStream.length(); i++) {
             marker.append(dataStream.charAt(i));
             marker.deleteCharAt(0);
             if(hasNoDuplicateChars(marker.toString())){
@@ -64,7 +68,14 @@ public class TuningTrouble {
 
     public static int pipeLine(String fileName){
         return charactersToBeProcessedBeforeFirstMarker(
-                readFile(fileName)
+                readFile(fileName),fourCharactersThatAllDifferent
+        );
+    }
+
+    //partTwo
+    public static int pipeLine2(String fileName){
+        return charactersToBeProcessedBeforeFirstMarker(
+                readFile(fileName),fourteenCharactersThatAllDifferent
         );
     }
 
