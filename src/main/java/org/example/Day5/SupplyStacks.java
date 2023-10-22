@@ -11,9 +11,20 @@ import java.util.regex.Pattern;
 
 public class SupplyStacks {
 
-    public static final int NO_OF_ITEMS = 0;
-    public static final int FROM_STACK = 1;
-    public static final int TO_STACK = 2;
+    public enum Instructions{
+        NO_OF_ITEMS(0),
+        FROM_STACK(1),
+        TO_STACK(2);
+        private final int value;
+        Instructions(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+    }
 
     public interface CrateMover{
         void usedCrateMoverType(Stack<String> from, Stack<String> to, int noOfItems);
@@ -189,9 +200,9 @@ public class SupplyStacks {
 
     public static ArrayList<Stack<String>> getStacksAfterRearrange(ArrayList<Stack<String>> stackListTest, ArrayList<int[]> instructions, CrateMover crateMover ){
         for (int[] instruction: instructions) {
-            int noOfItems = instruction[NO_OF_ITEMS];
-            int fromStack = instruction[FROM_STACK];
-            int toStack = instruction[TO_STACK];
+            int noOfItems = instruction[Instructions.NO_OF_ITEMS.getValue()];
+            int fromStack = instruction[Instructions.FROM_STACK.getValue()];
+            int toStack = instruction[Instructions.TO_STACK.getValue()];
 
             Stack<String> from = stackListTest.get(fromStack);
             Stack<String> to = stackListTest.get(toStack);
