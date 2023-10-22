@@ -19,7 +19,7 @@ class TuningTroubleTest {
     void charactersToBeProcessedBeforeFirstMarkerTest() {
         String dataStream = "mjqjpqmgbljsphdztnvjfqwrcgsmlb";
         int expected = 7;
-        int actual = charactersToBeProcessedBeforeFirstMarker(dataStream,charSeqAllDifferent.SIZE4.getValue());
+        int actual = charactersToBeProcessedBeforeFirstMarker(dataStream,CharSeqAllDifferent.SIZE4.getValue());
 
         assertEquals(expected,actual);
     }

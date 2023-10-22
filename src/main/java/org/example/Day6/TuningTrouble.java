@@ -8,13 +8,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class TuningTrouble {
-    
-    public enum charSeqAllDifferent{
+
+    public enum CharSeqAllDifferent{
         SIZE14(14),
         SIZE4(4);
 
         private final int value;
-        charSeqAllDifferent(int value) {
+        CharSeqAllDifferent(int value) {
             this.value = value;
         }
 
@@ -79,14 +79,14 @@ public class TuningTrouble {
 
     public static int pipeLine(String fileName){
         return charactersToBeProcessedBeforeFirstMarker(
-                readFile(fileName), charSeqAllDifferent.SIZE4.getValue()
+                readFile(fileName), CharSeqAllDifferent.SIZE4.getValue()
         );
     }
 
     //partTwo
     public static int pipeLine2(String fileName){
         return charactersToBeProcessedBeforeFirstMarker(
-                readFile(fileName),charSeqAllDifferent.SIZE14.getValue()
+                readFile(fileName),CharSeqAllDifferent.SIZE14.getValue()
         );
     }
 
