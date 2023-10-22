@@ -8,9 +8,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class TuningTrouble {
+    
+    public enum charSeqAllDifferent{
+        SIZE14(14),
+        SIZE4(4);
 
-    public static final int fourCharactersThatAllDifferent = 4;
-    public static final int fourteenCharactersThatAllDifferent = 14;
+        private final int value;
+        charSeqAllDifferent(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
 
     public static void main(String[] args) {
         String fileName = "/day6Input.txt";
@@ -68,14 +79,14 @@ public class TuningTrouble {
 
     public static int pipeLine(String fileName){
         return charactersToBeProcessedBeforeFirstMarker(
-                readFile(fileName),fourCharactersThatAllDifferent
+                readFile(fileName), charSeqAllDifferent.SIZE4.getValue()
         );
     }
 
     //partTwo
     public static int pipeLine2(String fileName){
         return charactersToBeProcessedBeforeFirstMarker(
-                readFile(fileName),fourteenCharactersThatAllDifferent
+                readFile(fileName),charSeqAllDifferent.SIZE14.getValue()
         );
     }
 
