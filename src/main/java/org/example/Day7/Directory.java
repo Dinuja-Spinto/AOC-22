@@ -16,11 +16,16 @@ public class Directory extends File{
         files.put(file.getName(), file);
     }
 
-    public Collection<File> getFiles() {
-        return files.values();
-    }
 
     public long size() {
+        long totalSize = 0;
+        for (File file : files.values()) {
+            totalSize += file.size();
+        }
+        return totalSize;
+    }
+
+    public long dirSize() {
         long totalSize = 0;
         for (File file : files.values()) {
             totalSize += file.size();
