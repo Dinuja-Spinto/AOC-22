@@ -25,14 +25,6 @@ public class Directory extends File{
         return totalSize;
     }
 
-    public long dirSize() {
-        long totalSize = 0;
-        for (File file : files.values()) {
-            totalSize += file.size();
-        }
-        return totalSize;
-    }
-
     public Directory getParent() {
         return parent;
     }

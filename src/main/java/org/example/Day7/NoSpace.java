@@ -13,7 +13,7 @@ public class NoSpace {
         //part1
         System.out.println("Sum of the total sizes of those directories: "+pipeLine(fileName));
         //part2
-        System.out.println(pipeLine2(fileName));
+        System.out.println("Total size of most deletable directory: "+pipeLine2(fileName));
     }
 
     public static ArrayList<String> readFile(String fileName) {
@@ -38,6 +38,7 @@ public class NoSpace {
 
         Directory currentDirectory = rootDirectory;
         List<Directory> allDirectories = new ArrayList<>();
+        allDirectories.add(rootDirectory);
 
         for (String line : terminalLine) {
 
@@ -84,54 +85,30 @@ public class NoSpace {
         );
     }
 
-    public static long getAllDirectories2(ArrayList<String> terminalLine) {
-        Directory rootDirectory = new Directory(null, "/");
+    //part2
+    public static long getMostDeletableFileSize(List<Directory> allDirectories){
 
-        Directory currentDirectory = rootDirectory;
-        List<Directory> allDirectories = new ArrayList<>();
-
-        for (String line : terminalLine) {
-
-            String[] lineItems = line.split(" ");
-            if ("$".equals(lineItems[0])) {
-                if ("cd".equals(lineItems[1])) {
-                    if ("/".equals(lineItems[2])) {
-                        currentDirectory = rootDirectory;
-                    } else if ("..".equals(lineItems[2])) {
-                        currentDirectory = currentDirectory.getParent();
-                    } else {
-                        currentDirectory = currentDirectory.getDirectory(lineItems[2]);
-                    }
-                }
-            } else if ("dir".equals(lineItems[0])) {
-                Directory directory = new Directory(currentDirectory, lineItems[1]);
-                currentDirectory.addFile(directory);
-                allDirectories.add(directory);
-            } else {
-                currentDirectory.addFile(new File(lineItems[1], Long.parseLong(lineItems[0])));
-            }
-
-        }
-
-        long sizeOfRoot = rootDirectory.size();
+        long sizeOfRoot = allDirectories.get(0).size();
         long spaceLeft = 70000000 - sizeOfRoot;
         long spaceToRemove = 30000000 - spaceLeft;
 
-        List<Long> candidates = new ArrayList<>();
+        List<Long> deletableFileSizes = new ArrayList<>();
 
         for (Directory de : allDirectories) {
             if (de.size() > spaceToRemove) {
-                candidates.add(de.size());
+                deletableFileSizes.add(de.size());
             }
         }
 
-        Collections.sort(candidates);
+        Collections.sort(deletableFileSizes);
 
-        return candidates.get(0);
+        return deletableFileSizes.get(0);
     }
-    //part2
-
     public static long pipeLine2(String fileName){
-        return getAllDirectories2(readFile(fileName));
+        return getMostDeletableFileSize(
+                getAllDirectories(
+                        readFile(fileName)
+                )
+        );
     }
 }
