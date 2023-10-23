@@ -8,6 +8,22 @@ import java.util.*;
 
 
 public class NoSpace {
+
+    public enum Space{
+        TOTAL_DISK_SPACE(70000000),
+        NEED_UNUSED_SPACE(30000000);
+
+        private final long space;
+
+        Space(long space) {
+            this.space = space;
+        }
+
+        public long getSpace(){
+            return space;
+        }
+    }
+
     public static void main(String[] args) {
         String fileName = "/day7Input.txt";
         //part1
@@ -89,8 +105,8 @@ public class NoSpace {
     public static long getMostDeletableFileSize(List<Directory> allDirectories){
 
         long sizeOfRoot = allDirectories.get(0).size();
-        long spaceLeft = 70000000 - sizeOfRoot;
-        long spaceToRemove = 30000000 - spaceLeft;
+        long spaceLeft = Space.TOTAL_DISK_SPACE.getSpace() - sizeOfRoot;
+        long spaceToRemove = Space.NEED_UNUSED_SPACE.getSpace() - spaceLeft;
 
         List<Long> deletableFileSizes = new ArrayList<>();
 
