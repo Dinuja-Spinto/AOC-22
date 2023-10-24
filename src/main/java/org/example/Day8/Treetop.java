@@ -57,17 +57,24 @@ public class Treetop {
         for(int i=1; i< numOfTreeRows-1; i++){
 
             for(int j=1; j<numOfTreeColumns-1; j++){
-                boolean right = true;
+                /*boolean right = true;
                 boolean left = true;
                 boolean up = true;
-                boolean down = true;
+                boolean down = true;*/
+
+                //Use bitWise Operations
+                // Left Right Down Up
+                //  1 1 1 1
+                int visible= 0xF; //1111
 
                 int treeHeight = treeHeightsGrid.get(i).get(j);
                 //Up
                 int u = i-1;
                 while (u >= 0){
                     if (treeHeight <= treeHeightsGrid.get(u).get(j)) {
-                        up = false;
+                        //up = false;
+                        int mask = 1 << (0);
+                        visible ^= mask;
                         break;
                     }
                     u--;
@@ -77,7 +84,9 @@ public class Treetop {
                 int d = i+1;
                 while (d < numOfTreeColumns){
                     if (treeHeight <= treeHeightsGrid.get(d).get(j)) {
-                        down = false;
+                        //down = false;
+                        int mask = 1 << (1);
+                        visible ^= mask;
                         break;
                     }
                     d++;
@@ -87,7 +96,9 @@ public class Treetop {
                 int r = j+1;
                 while (r < numOfTreeRows){
                     if (treeHeight <= treeHeightsGrid.get(i).get(r)) {
-                        right = false;
+                        //right = false;
+                        int mask = 1 << (2);
+                        visible ^= mask;
                         break;
                     }
                     r++;
@@ -97,13 +108,18 @@ public class Treetop {
                 int l = j-1;
                 while (l >= 0){
                     if (treeHeight <= treeHeightsGrid.get(i).get(l)) {
-                        left = false;
+                        //left = false;
+                        int mask = 1 << (3);
+                        visible ^= mask;
                         break;
                     }
                     l--;
                 }
 
-                if( up || down || right || left ){
+                /*if( up || down || right || left ){
+                    count++;
+                }*/
+                if(visible != 0){
                     count++;
                 }
             }
