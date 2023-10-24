@@ -10,10 +10,7 @@ public class Treetop {
     public static void main(String[] args) {
         String fileName = "/day8Input.txt";
         //part1
-        //System.out.println("Sum of the total sizes of those directories: "+pipeLine(fileName));
-        //part2
-        //System.out.println("Total size of most deletable directory: "+pipeLine2(fileName));
-        System.out.println(totalVisibleTrees(captureTreeHeight(readFile(fileName))));
+        System.out.println("Trees visible from outside the grid: "+pipeLine(fileName));
     }
 
     public static ArrayList<String> readFile(String fileName) {
@@ -117,5 +114,13 @@ public class Treetop {
 
     public static int totalVisibleTrees(ArrayList<ArrayList<Integer>> treeHeightsGrid){
         return calculateTreesVisibleOnTheEdge(treeHeightsGrid) + calculateTreesVisibleInInterior(treeHeightsGrid);
+    }
+
+    public static int pipeLine(String fileName){
+        return totalVisibleTrees(
+                captureTreeHeight(
+                        readFile(fileName)
+                )
+        );
     }
 }
