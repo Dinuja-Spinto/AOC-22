@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class Treetop {
     public static void main(String[] args) {
-        String fileName = "/day8TestInput.txt";
+        String fileName = "/day8Input.txt";
         //part1
         //System.out.println("Sum of the total sizes of those directories: "+pipeLine(fileName));
         //part2
         //System.out.println("Total size of most deletable directory: "+pipeLine2(fileName));
-        System.out.println(calculateTreesVisibleInInterior(captureTreeHeight(readFile(fileName))));
+        System.out.println(totalVisibleTrees(captureTreeHeight(readFile(fileName))));
     }
 
     public static ArrayList<String> readFile(String fileName) {
@@ -113,5 +113,9 @@ public class Treetop {
         }
 
         return count;
+    }
+
+    public static int totalVisibleTrees(ArrayList<ArrayList<Integer>> treeHeightsGrid){
+        return calculateTreesVisibleOnTheEdge(treeHeightsGrid) + calculateTreesVisibleInInterior(treeHeightsGrid);
     }
 }
