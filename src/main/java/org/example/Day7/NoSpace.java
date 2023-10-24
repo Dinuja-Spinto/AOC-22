@@ -9,6 +9,22 @@ import java.util.*;
 
 public class NoSpace {
 
+    public enum TerminalCmd{
+        CURRENT_DIRECTORY("cd"),
+        ROOT("/"),
+        DIRECTORY_NAME("dir"),
+        CMD_PROMPT("$"),
+        NAVIGATE_UP("..");
+        private final String cmd;
+        TerminalCmd(String cmd) {
+            this.cmd = cmd;
+        }
+
+        public String getCmd(){
+            return cmd;
+        }
+    }
+
     public enum Space{
         TOTAL_DISK_SPACE(70000000),
         NEED_UNUSED_SPACE(30000000);
@@ -59,17 +75,17 @@ public class NoSpace {
         for (String line : terminalLine) {
 
             String[] lineItems = line.split(" ");
-            if ("$".equals(lineItems[0])) {
-                if ("cd".equals(lineItems[1])) {
-                    if ("/".equals(lineItems[2])) {
+            if (TerminalCmd.CMD_PROMPT.getCmd().equals(lineItems[0])) {
+                if (TerminalCmd.CURRENT_DIRECTORY.getCmd().equals(lineItems[1])) {
+                    if (TerminalCmd.ROOT.getCmd().equals(lineItems[2])) {
                         currentDirectory = rootDirectory;
-                    } else if ("..".equals(lineItems[2])) {
+                    } else if (TerminalCmd.NAVIGATE_UP.getCmd().equals(lineItems[2])) {
                         currentDirectory = currentDirectory.getParent();
                     } else {
                         currentDirectory = currentDirectory.getDirectory(lineItems[2]);
                     }
                 }
-            } else if ("dir".equals(lineItems[0])) {
+            } else if (TerminalCmd.DIRECTORY_NAME.getCmd().equals(lineItems[0])) {
                 Directory directory = new Directory(currentDirectory, lineItems[1]);
                 currentDirectory.addFile(directory);
                 allDirectories.add(directory);
