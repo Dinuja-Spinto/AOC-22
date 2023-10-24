@@ -59,16 +59,15 @@ public class Treetop {
 
         for(int i=1; i< numOfTreeRows-1; i++){
 
-            boolean right = true;
-            boolean left = true;
-            boolean up = true;
-            boolean down = true;
-
             for(int j=1; j<numOfTreeColumns-1; j++){
+                boolean right = true;
+                boolean left = true;
+                boolean up = true;
+                boolean down = true;
 
                 int treeHeight = treeHeightsGrid.get(i).get(j);
                 //Up
-                int u = i;
+                int u = i-1;
                 while (u >= 0){
                     if (treeHeight <= treeHeightsGrid.get(u).get(j)) {
                         up = false;
@@ -78,7 +77,7 @@ public class Treetop {
                 }
 
                 //Down
-                int d = i;
+                int d = i+1;
                 while (d < numOfTreeColumns){
                     if (treeHeight <= treeHeightsGrid.get(d).get(j)) {
                         down = false;
@@ -88,7 +87,7 @@ public class Treetop {
                 }
 
                 //Right
-                int r = j;
+                int r = j+1;
                 while (r < numOfTreeRows){
                     if (treeHeight <= treeHeightsGrid.get(i).get(r)) {
                         right = false;
@@ -98,21 +97,20 @@ public class Treetop {
                 }
 
                 //left
-                int l = j;
+                int l = j-1;
                 while (l >= 0){
                     if (treeHeight <= treeHeightsGrid.get(i).get(l)) {
-                        right = false;
+                        left = false;
                         break;
                     }
                     l--;
                 }
 
-                if( right || left || up || down){
+                if( up || down || right || left ){
                     count++;
                 }
             }
         }
-
 
         return count;
     }
