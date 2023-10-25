@@ -11,6 +11,8 @@ public class Treetop {
         String fileName = "/day8Input.txt";
         //part1
         System.out.println("Trees visible from outside the grid: "+pipeLine(fileName));
+        //part2
+        System.out.println("Highest scenic score possible for any tree: "+pipeLine2(fileName));
     }
 
     public static ArrayList<String> readFile(String fileName) {
@@ -144,7 +146,7 @@ public class Treetop {
     //--part2--
     public static int calculateHighestScenicScore(ArrayList<ArrayList<Integer>> treeHeightsGrid){
         int highestScenicScore = 0;
-        int scenicScore = 0;
+        int scenicScore;
         int numOfTreeRows = treeHeightsGrid.size();
         int numOfTreeColumns = treeHeightsGrid.get(0).size();
 
@@ -207,5 +209,13 @@ public class Treetop {
         }
 
         return highestScenicScore;
+    }
+
+    public static int pipeLine2(String fileName){
+        return calculateHighestScenicScore(
+                captureTreeHeight(
+                        readFile(fileName)
+                )
+        );
     }
 }
