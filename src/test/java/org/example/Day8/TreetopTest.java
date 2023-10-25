@@ -86,10 +86,18 @@ class TreetopTest {
     }
 
     @Test
-    void calculateHighestScenicScore() {
+    void calculateHighestScenicScoreTest() {
+        int actual = calculateHighestScenicScore(captureTreeHeight(readFile(fileName)));
+        int expected = 8;
+
+        assertEquals(expected,actual);
     }
 
     @Test
-    void pipeLine2() {
+    void pipeLine2Test() {
+        int actual = pipeLine2(fileName);
+        int expected = 8;
+
+        assertEquals(expected,actual);
     }
 }
