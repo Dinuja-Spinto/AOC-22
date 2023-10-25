@@ -43,6 +43,7 @@ public class Treetop {
         return treeHeightsGrid;
     }
 
+    //--part1--
     public static int calculateTreesVisibleOnTheEdge(ArrayList<ArrayList<Integer>> treeHeightsGrid){
         int numOfTreeRows = treeHeightsGrid.size();
         int numOfTreeColumns = treeHeightsGrid.get(0).size();
@@ -138,5 +139,73 @@ public class Treetop {
                         readFile(fileName)
                 )
         );
+    }
+
+    //--part2--
+    public static int calculateHighestScenicScore(ArrayList<ArrayList<Integer>> treeHeightsGrid){
+        int highestScenicScore = 0;
+        int scenicScore = 0;
+        int numOfTreeRows = treeHeightsGrid.size();
+        int numOfTreeColumns = treeHeightsGrid.get(0).size();
+
+        for(int i=1; i< numOfTreeRows-1; i++){
+
+            for(int j=1; j<numOfTreeColumns-1; j++){
+
+                int treeHeight = treeHeightsGrid.get(i).get(j);
+                //Up
+                int u = i-1;
+                int upScore = 0;
+                while (u >= 0){
+                    upScore++;
+                    if (treeHeight <= treeHeightsGrid.get(u).get(j)) {
+                        break;
+                    }
+                    u--;
+                }
+
+                //Down
+                int d = i+1;
+                int downScore = 0;
+                while (d < numOfTreeColumns){
+                    downScore++;
+                    if (treeHeight <= treeHeightsGrid.get(d).get(j)) {
+                        break;
+                    }
+                    d++;
+                }
+
+                //Right
+                int r = j+1;
+                int rightScore = 0;
+                while (r < numOfTreeRows){
+                    rightScore++;
+                    if (treeHeight <= treeHeightsGrid.get(i).get(r)) {
+                        break;
+                    }
+                    r++;
+                }
+
+                //left
+                int l = j-1;
+                int leftScore = 0;
+                while (l >= 0){
+                    leftScore++;
+                    if (treeHeight <= treeHeightsGrid.get(i).get(l)) {
+                        break;
+                    }
+                    l--;
+                }
+
+                scenicScore = downScore * upScore * leftScore * rightScore;
+
+                if(scenicScore > highestScenicScore){
+                    highestScenicScore = scenicScore;
+                }
+
+            }
+        }
+
+        return highestScenicScore;
     }
 }
