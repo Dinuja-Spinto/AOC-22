@@ -12,7 +12,7 @@ class NoSpaceTest {
     String fileName = "/day7TestInput.txt";
     @Test
     void readFileTest() {
-        ArrayList<String> actual = readFile(fileName);
+        ArrayList<String> actual = readFile("/day7TestInput2.txt");
         ArrayList<String> expected = new ArrayList<>();
         expected.add("$ cd /");
         expected.add("$ ls");
